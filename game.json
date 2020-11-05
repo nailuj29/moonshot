@@ -142,6 +142,15 @@
         "name": "Player-1.png",
         "smoothed": false,
         "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "Borders-1.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "Borders-1.png",
+        "smoothed": false,
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -194,6 +203,70 @@
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 904,
+          "layer": "",
+          "locked": false,
+          "name": "Borders",
+          "persistentUuid": "7f81af2e-2abf-4ab6-8b2f-a1dea31c8e2a",
+          "width": 69,
+          "x": -74,
+          "y": -55,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 46,
+          "layer": "",
+          "locked": false,
+          "name": "Borders",
+          "persistentUuid": "ee8cfd2b-390e-4dc4-a90d-a2ad30ed74cd",
+          "width": 605,
+          "x": -3,
+          "y": -55,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 46,
+          "layer": "",
+          "locked": false,
+          "name": "Borders",
+          "persistentUuid": "6c29bb57-9b1b-4549-bddf-67a316bb3298",
+          "width": 605,
+          "x": -5,
+          "y": 807,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 904,
+          "layer": "",
+          "locked": false,
+          "name": "Borders",
+          "persistentUuid": "cd526ad7-15aa-473f-bb69-380746ce4609",
+          "width": 69,
+          "x": 608,
+          "y": -55,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
         }
       ],
       "objects": [
@@ -205,6 +278,8 @@
           "variables": [],
           "behaviors": [
             {
+              "name": "TopDownMovement",
+              "type": "TopDownMovementBehavior::TopDownMovementBehavior",
               "acceleration": 2000,
               "allowDiagonals": true,
               "angleOffset": 0,
@@ -212,9 +287,7 @@
               "deceleration": 1200,
               "ignoreDefaultControls": false,
               "maxSpeed": 1000,
-              "name": "TopDownMovement",
-              "rotateObject": false,
-              "type": "TopDownMovementBehavior::TopDownMovementBehavior"
+              "rotateObject": false
             }
           ],
           "animations": [
@@ -229,6 +302,45 @@
                     {
                       "hasCustomCollisionMask": false,
                       "image": "Player-1.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 16,
+                        "y": 16
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 27.3334,
+                        "y": 13.3333
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Borders",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "Borders",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Borders-1.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
@@ -257,7 +369,7 @@
           "colorR": 74,
           "creationTime": 0,
           "disabled": false,
-          "folded": false,
+          "folded": true,
           "name": "Prevent Player from leaving screen",
           "source": "",
           "type": "BuiltinCommonInstructions::Group",
@@ -270,12 +382,14 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "PosX"
+                    "value": "CollisionNP"
                   },
                   "parameters": [
                     "Player",
-                    ">=",
-                    "ScreenWidth()-Player.Width()"
+                    "Borders",
+                    "CameraWidth(\"Ships\", 0)-Player.Width()",
+                    "",
+                    ""
                   ],
                   "subInstructions": []
                 }
@@ -284,66 +398,16 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "MettreX"
+                    "value": "SeparateFromObjects"
                   },
                   "parameters": [
                     "Player",
-                    "=",
+                    "Borders",
                     "CameraWidth(\"Ships\", 0)-Player.Width()"
                   ],
                   "subInstructions": []
                 }
               ],
-              "events": []
-            },
-            {
-              "disabled": false,
-              "folded": false,
-              "type": "BuiltinCommonInstructions::Standard",
-              "conditions": [
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "PosY"
-                  },
-                  "parameters": [
-                    "Player",
-                    "=",
-                    "ScreenHeight()-Player.Height()"
-                  ],
-                  "subInstructions": []
-                }
-              ],
-              "actions": [
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "MettreY"
-                  },
-                  "parameters": [
-                    "Player",
-                    "=",
-                    "CameraHeight()-Player.Height()"
-                  ],
-                  "subInstructions": []
-                }
-              ],
-              "events": []
-            },
-            {
-              "disabled": false,
-              "folded": false,
-              "type": "BuiltinCommonInstructions::Standard",
-              "conditions": [],
-              "actions": [],
-              "events": []
-            },
-            {
-              "disabled": false,
-              "folded": false,
-              "type": "BuiltinCommonInstructions::Standard",
-              "conditions": [],
-              "actions": [],
               "events": []
             }
           ],
@@ -374,7 +438,7 @@
           "effects": []
         },
         {
-          "ambientLightColorB": 1702453580,
+          "ambientLightColorB": 1702453632,
           "ambientLightColorG": 6000560,
           "ambientLightColorR": 100663296,
           "followBaseLayerCamera": false,
